@@ -5,66 +5,67 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "Driver")
 public class Driver {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer driverId;
+
     private String mobile;
+
     private String password;
 
-    public Driver() {
-    }
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    private List<TripBooking> tripBookingList = new ArrayList<>();
 
-    public Driver(Integer driverId, String mobile, String password) {
-        this.driverId = driverId;
+    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
+    private Cab cab;
+
+    public Driver(String mobile, String password) {
         this.mobile = mobile;
         this.password = password;
+    }
+
+    public Driver() {
     }
 
     public Integer getDriverId() {
         return driverId;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     public void setDriverId(Integer driverId) {
         this.driverId = driverId;
+    }
+
+    public String getMobile() {
+        return mobile;
     }
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getPassword() {
+        return password;
     }
 
-    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
-    private Cab cab;
-
-    @OneToMany(mappedBy = "driver",cascade = CascadeType.ALL)
-    List<TripBooking> tripBookingList = new ArrayList<>();
-
-    public Cab getCab() {
-        return cab;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public List<TripBooking> getTripBookingList() {
         return tripBookingList;
     }
 
-    public void setCab(Cab cab) {
-        this.cab = cab;
-    }
-
     public void setTripBookingList(List<TripBooking> tripBookingList) {
         this.tripBookingList = tripBookingList;
+    }
+
+    public Cab getCab() {
+        return cab;
+    }
+
+    public void setCab(Cab cab) {
+        this.cab = cab;
     }
 }

@@ -35,21 +35,18 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public Admin updatePassword(Integer adminId, String password) {
 		//Update the password of admin with given id
-		Optional<Admin> optionalAdmin = adminRepository1.findById(adminId);
-
-		if(!optionalAdmin.isPresent()) return null;
-
-		Admin admin = optionalAdmin.get();
+		Admin admin = adminRepository1.findById(adminId).get();
 		admin.setPassword(password);
-		return  admin;
+
+		admin = adminRepository1.save(admin);
+
+		return admin;
 	}
 
 	@Override
 	public void deleteAdmin(int adminId){
 		// Delete admin without using deleteById function
-		Optional<Admin> optionalAdmin = adminRepository1.findById(adminId);
-		if(!optionalAdmin.isPresent()) return;
-		Admin admin = optionalAdmin.get();
+		Admin admin = adminRepository1.findById(adminId).get();
 		adminRepository1.delete(admin);
 	}
 
